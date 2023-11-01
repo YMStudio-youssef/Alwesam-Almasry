@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <!-- Main Css File -->
+    <link rel="stylesheet" href="css/contact.css">
+    <!-- Normalize File -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- Global Rules File -->
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- Header File -->
+    <link rel="stylesheet" href="css/header.css">
+    <!-- FrameWork File -->
+    <link rel="stylesheet" href="css/framework.css">
+    <!-- Cairo Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+    <!-- Font Awesome Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <style>
+        .modal-popup {
+          display: none;
+          position: fixed;
+          z-index: 9999;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .modal-content {
+          background-color: #fefefe;
+          margin: 15% auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 400px;
+          height: 165px;
+          border-radius: 5px;
+          position: relative;
+        }
+        
+        .modal-title {
+          font-size: 24px;
+          margin-bottom: 10px;
+        }
+        
+        .modal-message {
+          margin-top: 40px;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+        
+        .modal-close {
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          font-size: 30px;
+          color: #0A6836;
+          /* background-color: #0A6836; */
+          cursor: pointer;
+        }
+
+        .modal-content button{
+            background-color: #0A6836;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+          color: #555;
+        }
+    </style>
+    <%- include ('partials/header.ejs') %>
+    <!-- Start Contact -->
+    <div class="contact-details">
+        <div class="container">
+            <div class="info">
+                <h2 class="h1 heading">تواصل معنا</h2>
+                <p>لأية استفسارات ، أو لمجرد إلقاء التحية ، تواصل معنا</p>
+                <h2 class="heading-point">العنوان</h2>
+                <p>المملكة العربية السعودية, الرياض</p>
+                <div class="contact-info">
+                    <div class="email">
+                        <h2 class="heading-point">البريد الالكتروني</h2>
+                        <p>info@alwesamalmasry.com</p>
+                    </div>
+                    <div class="phone">
+                        <h2 class="heading-point">ارقام التواصل</h2>
+                        <p>056 525 8902</p>
+                        <p>054 021 3290</p>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <!-- <img src="images/map.jpg" alt=""> -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d927758.0365068287!2d46.16302960816569!3d24.724997820825163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03890d489399%3A0xba974d1c98e79fd5!2sRiyadh!5e0!3m2!1sen!2ssa!4v1696172543071!5m2!1sen!2ssa" width="550" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+    <div id="successPopup" class="modal-popup">
+        <div class="modal-content">
+          <span class="modal-close" onclick="closePopup('successPopup')">&times;</span>
+          <!-- <h3 class="modal-title">Success</h3> -->
+          <p class="modal-message">تم استلام رسالتك وسيتم الرد عليك في أقرب وقت</p>
+          <button onclick="closePopup('successPopup')">Close</button>
+        </div>
+    </div>
+      
+    <div id="errorPopup" class="modal-popup">
+        <div class="modal-content">
+          <span class="modal-close" onclick="closePopup('errorPopup')">&times;</span>
+          <!-- <h3 class="modal-title">Error</h3> -->
+          <p class="modal-message">حدث خطأ عند إرسال الرسالة، الرجاء المحاولة لاحقًا</p>
+          <button onclick="closePopup('errorPopup')">Close</button>
+        </div>
+    </div>
+    <div class="contact-form">
+        <div class="container">
+            <form action="/send" method="post" novalidate>
+                <input type="text" placeholder="الاسم الاول" class="firstName" name="firstName" required>
+                <input type="text" placeholder="الاسم الثاني" class="lastName" name="lastName" required>
+                <input type="email" placeholder="البريد الالكتروني" class="email" name="from" required>
+                <input type="email" value="mahamadgomah2011@gmail.com" hidden="true" name="to">
+                <input type="text" placeholder="موضوع الرسالة" class="subject" name="subject" required>
+                <textarea placeholder="الرسالة" id="" cols="30" class="message" name="message" rows="10" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <!-- End Contact -->
+    <%- include ('partials/footer.ejs') %>
+    <!-- Jquery Cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function closePopup(popupId) {
+          var popup = document.getElementById(popupId);
+          popup.style.display = 'none';
+        }
+      
+        // Check if the success message is available
+        var successMessage = '<%= successMessage %>';
+        if (successMessage) {
+          var successPopup = document.getElementById('successPopup');
+          successPopup.style.display = 'block';
+        }
+      
+        // Check if the error message is available
+        var errorMessage = '<%= errorMessage %>';
+        if (errorMessage) {
+          var errorPopup = document.getElementById('errorPopup');
+          errorPopup.style.display = 'block';
+        }
+    </script>
+    <!-- Main Js File -->
+    <!-- <script src="js/header.js"></script> -->
+</body>
+</html>
